@@ -13,7 +13,9 @@ SIZE = re.compile(r"\b(xxs|xs|xxl|xl|small|medium|large|s|l)\b", re.I)
 QTY = re.compile(r"\b(\d+)\s?(?:pcs?|x)\b|\bx\s?(\d+)\b", re.I)
 FILLER = {"po", "ate", "sis", "kuya", "ko", "pls", "please", "yung", "ung", "na", "ito", "to",
           "this", "one", "ni", "si", "nga", "lang", "sana", "rin", "din", "ma'am", "maam", "mam",
-          "beh", "be", "pa", "nalang", "na lang", "ty", "thanks", "salamat", "huhu", "pls", "plss"}
+          "beh", "be", "pa", "nalang", "ty", "thanks", "salamat", "huhu", "plss",
+          # pointing at the item on camera: "yung nasa camera", "eto po", "yan"
+          "nasa", "camera", "cam", "eto", "yan", "yun", "iyan", "iyon", "that"}
 SIZES = {"xxs": "XXS", "xs": "XS", "s": "S", "small": "S", "medium": "M", "l": "L",
          "large": "L", "xl": "XL", "xxl": "XXL"}
 
