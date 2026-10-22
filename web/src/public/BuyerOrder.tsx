@@ -152,7 +152,7 @@ function Confirmed({ o, token, onChange, reload }: { o: O; token: string; onChan
           <div className="truncate text-[15px] font-semibold"><Code>{o.item.code}</Code> {o.item.name}{o.size ? `, ${o.size}` : ''} ×{o.qty}</div>
         </div>
         <div className="text-right"><div className="font-display text-[22px] font-bold tabular">{peso(o.total_centavos)}</div>
-          <div className="text-[12px] text-muted">pay by {clock(o.pay_by)}{payLeft < 3600000 && payLeft > 0 ? ` (${duration(payLeft)})` : ''}</div></div>
+          <div className="text-[12px] text-muted">pay by {payLeft > 12 * 3600000 ? dateTime(o.pay_by) : clock(o.pay_by)}{payLeft < 3600000 && payLeft > 0 ? ` (${duration(payLeft)})` : ''}</div></div>
       </div>
       {o.seller_note && <div className="flex gap-2.5 rounded-xl border border-[#F0D9B5] bg-pending-soft px-4 py-3 text-[14px] text-pending-deep" role="status"><Icon name="chat" className="mt-0.5" /><span><b>Message from {o.seller_name}:</b> {o.seller_note}</span></div>}
       {mode === 'both' && (

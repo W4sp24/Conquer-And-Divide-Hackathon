@@ -113,8 +113,8 @@ export function SellerLayout() {
   const liveTo = live ? `live/${live.id}` : 'sessions'
   return (
     <SellerCtx.Provider value={{ me, live, counts, refresh }}>
-      <div className="min-h-screen lg:grid lg:grid-cols-[224px_minmax(0,1fr)]">
-        <aside className="sticky top-0 z-30 flex items-center gap-3 border-b border-line bg-surface px-4 py-2.5 lg:h-screen lg:flex-col lg:items-stretch lg:gap-6 lg:border-b-0 lg:border-r lg:px-3 lg:py-5">
+      <div className="min-h-screen lg:grid lg:grid-cols-[224px_minmax(0,1fr)] print:block">
+        <aside className="sticky top-0 z-30 flex print:hidden items-center gap-3 border-b border-line bg-surface px-4 py-2.5 lg:h-screen lg:flex-col lg:items-stretch lg:gap-6 lg:border-b-0 lg:border-r lg:px-3 lg:py-5">
           <div className="px-2 lg:pb-1"><Logo /></div>
           <nav className="flex flex-1 gap-1 overflow-x-auto lg:flex-col lg:overflow-visible" aria-label="Seller">
             {NAV.map((n) => {

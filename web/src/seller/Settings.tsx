@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Modal } from '../components/Modal'
 import { QR } from '../components/QR'
 import { useToast } from '../components/Toast'
 import { Button, Card, cx, Field, Input, PageHeader, Toggle } from '../components/ui'
@@ -34,6 +35,16 @@ export default function Settings() {
     } catch (e) { toast((e as Error).message, 'error') } finally { setBusy(false) }
   }
   const walletUrl = `${base}/w/${me.id}`
+  const [resetOpen, setResetOpen] = useState(false)
+  const reset = async () => {
+    setBusy(true)
+    try {
+      await seller.post('/seller/reset-demo')
+      toast('Demo data cleared. Catalog and settings kept.')
+      setResetOpen(false)
+      refresh()
+    } catch (e) { toast((e as Error).message, 'error') } finally { setBusy(false) }
+  }
   return (
     <div className="mx-auto max-w-[920px] px-5 py-8 lg:px-10">
       <PageHeader title="Settings" sub="How buyers pay you, and how long they have to confirm and pay."><Button loading={busy} onClick={save}>Save changes</Button></PageHeader>
@@ -87,7 +98,7 @@ export default function Settings() {
         </div>
       </Card>
 
-      <Card className="p-6">
+      <Card className="mb-5 p-6">
         <h2 className="mb-3 text-[17px] font-bold">Connections</h2>
         <ul className="space-y-2 text-[14px]">
           <li className="flex items-center gap-2"><span className={cx('h-2 w-2 rounded-full', me.llm?.enabled ? 'bg-brand' : 'bg-faint')} />
@@ -96,6 +107,18 @@ export default function Settings() {
             Facebook Live comments: {me.meta_configured ? <b>Page token set</b> : <span className="text-muted">no Page token. Set META_PAGE_TOKEN on the server.</span>}</li>
         </ul>
       </Card>
+
+      <Card className="flex flex-wrap items-center justify-between gap-4 border-[#F2C9C4] p-6">
+        <div>
+          <h2 className="text-[17px] font-bold">Start the demo over</h2>
+          <p className="text-[13.5px] text-muted">Clears every live, order, payment and buyer. Your catalog, settings and the AI’s learned fixes stay.</p>
+        </div>
+        <Button variant="outline" icon="refresh" className="text-hold" onClick={() => setResetOpen(true)}>Reset demo data</Button>
+      </Card>
+      <Modal open={resetOpen} onClose={() => setResetOpen(false)} title="Clear all demo data?"
+        footer={<><Button variant="ghost" onClick={() => setResetOpen(false)}>Keep data</Button><Button variant="danger" loading={busy} onClick={reset}>Clear demo data</Button></>}>
+        <p className="text-[14px] text-ink-2">Lives, comments, orders, payments, statements and buyer records are deleted. This can’t be undone.</p>
+      </Modal>
     </div>
   )
 }

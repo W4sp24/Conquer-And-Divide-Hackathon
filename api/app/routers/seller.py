@@ -13,7 +13,7 @@ from app.config import settings
 from app.orders.labels import LABEL_NOTES, label
 from app.orders.states import ENDED
 from app.schema import (buyers, comments, live_sessions, order_events, orders, payment_intents, payments,
-                        proofs, sellers)
+                        proofs, sellers, statement_uploads, wallet_ledger)
 
 router = APIRouter(tags=["seller"])
 
@@ -185,3 +185,30 @@ async def insights(session_id: str | None = None, seller=Depends(seller_only)):
             "statement_uploaded": bool(await db.statement_until(s["seller_id"])),
             "items": items, "orders_total": len(os_)}
 
+
+
+@router.post("/seller/reset-demo")
+async def reset_demo(seller=Depends(seller_only)):
+    """Wipe lives, orders, payments and buyers so a rehearsal can start clean.
+    The catalog, settings and the AI's learned corrections stay."""
+    from app import rtc
+    from app.sources import runner
+    sids = [r["id"] for r in await db.fetch(select(live_sessions.c.id).where(live_sessions.c.seller_id == seller["id"]))]
+    for sid in sids:
+        runner.stop(sid)
+        rtc.set_live(sid, False)
+    await runner.drain()
+    oids = select(orders.c.id).where(orders.c.seller_id == seller["id"])
+    async with db.tx() as c:
+        await c.execute(delete(order_events).where(order_events.c.order_id.in_(oids)))
+        await c.execute(delete(payment_intents).where(payment_intents.c.seller_id == seller["id"]))
+        await c.execute(delete(payments).where(payments.c.seller_id == seller["id"]))
+        await c.execute(delete(statement_uploads).where(statement_uploads.c.seller_id == seller["id"]))
+        await c.execute(delete(proofs).where(proofs.c.seller_id == seller["id"]))
+        await c.execute(delete(wallet_ledger).where(wallet_ledger.c.seller_id == seller["id"]))
+        await c.execute(delete(orders).where(orders.c.seller_id == seller["id"]))
+        if sids:
+            await c.execute(delete(comments).where(comments.c.session_id.in_(sids)))
+        await c.execute(delete(live_sessions).where(live_sessions.c.seller_id == seller["id"]))
+        await c.execute(delete(buyers).where(buyers.c.seller_id == seller["id"]))
+    return {"ok": True}

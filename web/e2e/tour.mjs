@@ -32,6 +32,49 @@ if (process.env.REPLAY !== '0') {
   await shot(page, '03-live-board')
   await page.screenshot({ path: `${OUT}/03b-live-board-full.png`, fullPage: true })
 }
+// put a few orders through payment so Payments/Packing/Insights have every state
+{
+  const H = { 'X-Seller-Key': KEY }
+  const sessions = await (await page.request.get(`${BASE}/api/sessions`, { headers: H })).json()
+  const sid = sessions[0].id
+  const all = await (await page.request.get(`${BASE}/api/orders?session_id=${sid}`, { headers: H })).json()
+  const claimed = all.filter((o) => o.status === 'CLAIMED')
+  const confirm = async (o) => (await page.request.post(`${BASE}/api/buyer/${o.buyer_token}/confirm`, { data: { size: o.size || null } })).json()
+  const [a, b, c, d, e] = claimed
+  for (const o of [a, b, c, d, e].filter(Boolean)) {
+    const r = await confirm(o)
+    if (!r.status && o.buyer_token) {
+      const info = await (await page.request.get(`${BASE}/api/buyer/${o.buyer_token}`)).json()
+      await page.request.post(`${BASE}/api/buyer/${o.buyer_token}/confirm`, { data: { size: info.item.sizes[0] ?? null } })
+    }
+  }
+  const seller = await (await page.request.get(`${BASE}/api/seller`, { headers: H })).json()
+  const pay = async (o, amount) => {
+    const r = await (await page.request.post(`${BASE}/api/wallet/${seller.id}/send`, { data: { amount_centavos: amount ?? o.total_centavos, sender_name: o.buyer } })).json()
+    await page.request.post(`${BASE}/api/buyer/${o.buyer_token}/proof`, { data: { reference: r.reference, attested: true } })
+  }
+  if (a) await pay(a)
+  if (b) await pay(b, Math.round(b.total_centavos / 2))           // underpaid
+  if (c) await page.request.post(`${BASE}/api/buyer/${c.buyer_token}/proof`, { data: { reference: '4455 667 788990', attested: true } })  // fake
+  if (d) { const q = await (await page.request.post(`${BASE}/api/buyer/${d.buyer_token}/qr`)).json(); await page.request.post(`${BASE}/api/gateway/intents/${q.intent_id}/pay`, { data: {} }) }
+  const csv = await (await page.request.get(`${BASE}/api/payments/wallet-statement.csv`, { headers: H })).text()
+  await page.request.post(`${BASE}/api/payments/statement`, { headers: H, multipart: { file: { name: 'gcash.csv', mimeType: 'text/csv', buffer: Buffer.from(csv) } } })
+  if (e) {
+    const phone0 = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true })
+    const p0 = await phone0.newPage()
+    await p0.goto(`${BASE}/o/${e.buyer_token}`)
+    await shot(p0, '12-buyer-confirmed-qr')
+    const q = await (await page.request.post(`${BASE}/api/buyer/${e.buyer_token}/qr`)).json()
+    await p0.goto(`${BASE}/pay/${q.intent_id}`)
+    await shot(p0, '13-mock-qrph-gateway')
+    await p0.goto(`${BASE}/w/${seller.id}?amount=35000&note=B7%20Blue%20polo`)
+    await shot(p0, '14-demowallet')
+    await p0.goto(`${BASE}/o/${a.buyer_token}`)
+    await shot(p0, '15-buyer-checking')
+    await p0.goto(`${BASE}/o/${d.buyer_token}`)
+    await shot(p0, '16-buyer-paid')
+  }
+}
 for (const [path, name] of [['payments', '04-payments'], ['packing', '05-packing'], ['insights', '06-insights'], ['catalog', '07-catalog'], ['buyers', '08-buyers'], ['settings', '09-settings']]) {
   await page.goto(`${BASE}/seller/${path}`)
   await page.waitForLoadState('networkidle').catch(() => {})
