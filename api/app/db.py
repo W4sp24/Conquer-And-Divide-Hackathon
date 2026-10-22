@@ -25,10 +25,13 @@ if IS_SQLITE:
     if db_path and db_path != ":memory:":
         Path(db_path).parent.mkdir(parents=True, exist_ok=True)
 
+# Supabase's pooler (pgbouncer, transaction mode) can't keep prepared statements,
+# so asyncpg's statement cache is turned off for Postgres.
 engine = create_async_engine(
     settings.database_url,
-    connect_args={"timeout": 30} if IS_SQLITE else {},
+    connect_args={"timeout": 30} if IS_SQLITE else {"statement_cache_size": 0},
     pool_pre_ping=not IS_SQLITE,
+    **({} if IS_SQLITE else {"pool_size": 5, "max_overflow": 5}),
 )
 
 if IS_SQLITE:
