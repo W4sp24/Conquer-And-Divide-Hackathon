@@ -57,7 +57,8 @@ async def confirm_order(token: str, body: ConfirmIn):
 @router.post("/{token}/cancel")
 async def cancel(token: str):
     o = await _order(token)
-    if not await cancel_by_buyer(o):
+    # once a payment is sent, only the seller can cancel (the buyer already paid)
+    if o["status"] not in ("CLAIMED", "WAITLISTED", "CONFIRMED") or not await cancel_by_buyer(o):
         raise HTTPException(409, "this order can't be cancelled now")
     return await views.buyer_view(await _order(token))
 
