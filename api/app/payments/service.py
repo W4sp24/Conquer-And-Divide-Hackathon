@@ -112,8 +112,9 @@ async def seller_release(order_id: str, actor: str = "seller", note: str = "rele
 async def seller_reject(order_id: str, reason: str) -> dict | None:
     o = await transition(order_id, "CONFIRMED", "seller", f"proof rejected: {reason}",
                          verdict=None, verdict_reasons=[], verdict_suggestion=None,
-                         seller_note=f"Your payment could not be confirmed ({reason}). "
-                                     "Please check your app and send the correct reference.")
+                         # the buyer never sees the reason: the system doesn't accuse anyone on screen
+                         seller_note="The seller couldn't match this payment yet. "
+                                     "Please check your app and send the reference again.")
     if o:
         await bump_buyer(o["buyer_id"], failed_proofs=1)
     return o

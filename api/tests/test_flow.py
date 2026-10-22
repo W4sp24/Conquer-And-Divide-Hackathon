@@ -204,3 +204,10 @@ def test_delete_buyer_data(client, sid):
     b = next(x for x in client.get("/api/buyers", headers=H).json() if x["name"] == "Kim Uy")
     assert client.delete(f"/api/buyers/{b['id']}", headers=H).status_code == 200
     assert not any(x["name"] == "Kim Uy" for x in client.get("/api/buyers", headers=H).json())
+
+
+def test_reset_demo(client, sid):
+    assert client.post("/api/seller/reset-demo", headers=H).status_code == 200
+    assert client.get("/api/sessions", headers=H).json() == []
+    assert client.get("/api/buyers", headers=H).json() == []
+    assert len(client.get("/api/catalog", headers=H).json()) == 20      # catalog kept

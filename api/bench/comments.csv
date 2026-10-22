@@ -1,0 +1,70 @@
+message,on_camera,gold_intent,gold_item,gold_size,gold_qty
+mine B12,B12,claim,B12,,1
+mine b12 po,B12,claim,B12,,1
+mine B-7 L,B7,claim,B7,L,1
+pa mine po B4 2pcs,B4,claim,B4,,2
+mine po,B3,claim,B3,,1
+m,B9,claim,B9,,1
+mine,B20,claim,B20,,1
+akin na lang po B10,B10,claim,B10,,1
+kuha ko B2 30,B2,claim,B2,30,1
+pabili po B17 x2,B17,claim,B17,,2
+mine B14 XL po,B14,claim,B14,XL,1
+mine B13 S,B13,claim,B13,S,1
+grab B6,B6,claim,B6,Free size,1
+mine B11 28,B11,claim,B11,28,1
+mine B1 small,B1,claim,B1,S,1
+mine B8 32 po,B8,claim,B8,32,1
+mine blu polo,B1,claim,B7,,1
+mine blue polo M,B1,claim,B7,M,1
+mine plaid flannel,B5,claim,B10,,1
+mine trench coat,B1,claim,B18,M,1
+mine gray hoodie L,B2,claim,B14,L,1
+pabili po ng gray hoodie L,B2,claim,B14,L,1
+mine track jacket XL,B1,claim,B20,XL,1
+mine leather belt,B3,claim,B17,Free size,1
+mine knit cardigan,B4,claim,B6,Free size,1
+mine cargo shorts 34,B5,claim,B8,34,1
+mine satin blouse S,B6,claim,B13,S,1
+mine mom jeans 26,B7,claim,B11,26,1
+mine sweater vest L,B8,claim,B19,L,1
+mine corduroy skirt,B9,claim,B5,,1
+mine windbreaker,B10,claim,B9,L,1
+mine yung windbreaker na green,B12,claim,B9,L,1
+pa mine po yung blue na polo M sana,B12,claim,B7,M,1
+mine yung asul na polo,B12,claim,B7,,1
+sakin na lang yung maong jacket,B3,claim,B12,,1
+mine yung brown na palda S,B20,claim,B5,S,1
+mine yung pang bestida para kay mama,B3,claim,B3,,1
+pa-reserve po ng cardigan,B20,claim,B6,Free size,1
+mine yung itim na slacks 30,B1,claim,B2,30,1
+mine yung puti na linen L,B4,claim,B1,L,1
+akin yung guhit na tee,B9,claim,B4,,1
+mine po yung nasa camera,B15,claim,B15,,1
+mine ito po,B16,claim,B16,,1
+mine this one L,B16,claim,B16,L,1
+cancel B12,B1,cancel,B12,,1
+cancel B12 po sorry ate,B1,cancel,B12,,1
+hindi na po B9 cancel,B2,cancel,B9,,1
+di na po ako sa B4,B3,cancel,B4,,1
+pass po B10,B10,cancel,B10,,1
+ayaw ko na po ng B7,B7,cancel,B7,,1
+backup B9 po,B9,waitlist,B9,,1
+next po sa floral,B3,waitlist,B3,,1
+waitlist B12,B12,waitlist,B12,,1
+pa-next po B20,B20,waitlist,B20,,1
+ganda ate!,B1,other,,,1
+hello po from cavite,B1,other,,,1
+ang ganda ng trench coat!!,B18,other,,,1
+thank you ate jessa!,B1,other,,,1
+hm po B12?,B12,question,,,1
+how much po B4,B4,question,,,1
+may size S pa po ba sa B13?,B13,question,,,1
+san po location nyo,B1,question,,,1
+cod po ba?,B1,question,,,1
+ilang inches po waist ng B11,B11,question,,,1
+up,B1,other,,,1
+nice,B2,other,,,1
+mine yung ano po basta,B5,claim,B5,,1
+mine yung kanina,B6,claim,,,1
+mine B99,B1,claim,,,1

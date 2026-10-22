@@ -1,0 +1,22 @@
+# Render blueprint: one web service runs the API and serves the built web app.
+services:
+  - type: web
+    name: live-seller-order-desk
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r api/requirements.txt && cd web && npm ci && npm run build
+    startCommand: cd api && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: DATABASE_URL
+        sync: false
+      - key: SELLER_KEY
+        generateValue: true
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: META_PAGE_TOKEN
+        sync: false
+      - key: GATEWAY_WEBHOOK_SECRET
+        generateValue: true
