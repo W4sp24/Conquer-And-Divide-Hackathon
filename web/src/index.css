@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Design tokens. Palette from the team's mockup: a calm ledger green for money that
+   checks out, brick red for Hold, amber for Pending, violet for anything the AI read. */
+@theme {
+  --color-bg: #F6F7F4;
+  --color-surface: #FFFFFF;
+  --color-sunken: #EEF0EA;
+  --color-ink: #1F2926;
+  --color-ink-2: #47524E;
+  --color-muted: #5E6965;
+  --color-faint: #8A938F;
+  --color-line: #E6E8E3;
+  --color-line-2: #D5D8D2;
+  --color-brand: #17806A;
+  --color-brand-deep: #0F5E4D;
+  --color-brand-soft: #E8F3EF;
+  --color-brand-line: #B9DCCF;
+  --color-hold: #B42318;
+  --color-hold-deep: #8F1D13;
+  --color-hold-soft: #FBEDEB;
+  --color-pending: #B45309;
+  --color-pending-deep: #8A4A0B;
+  --color-pending-soft: #FDF3E4;
+  --color-ai: #6D28D9;
+  --color-ai-soft: #F3EEFD;
+  --color-sand: #CFC7B6;
+  --color-stage: #1B2421;
+  --color-stage-2: #26322E;
+
+  --font-display: "Bricolage Grotesque", Inter, system-ui, sans-serif;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-card: 14px;
+  --shadow-card: 0 1px 0 rgb(31 41 38 / 0.04), 0 1px 2px rgb(31 41 38 / 0.06);
+  --shadow-pop: 0 12px 32px -8px rgb(31 41 38 / 0.22), 0 2px 6px rgb(31 41 38 / 0.08);
+
+  --animate-rise: rise 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-pop: pop 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-flash: flash 1.6s ease-out;
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+@keyframes pop { from { opacity: 0; transform: scale(.96) } to { opacity: 1; transform: none } }
+@keyframes flash { 0% { background-color: #DDF0E8 } 100% { background-color: transparent } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.01em; }
+p { text-wrap: pretty; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 3px solid var(--color-brand); outline-offset: 2px; border-radius: 6px; }
+::selection { background: #CDE7DE; color: var(--color-ink); }
+* { scrollbar-width: thin; scrollbar-color: var(--color-line-2) transparent; }
+input::placeholder, textarea::placeholder { color: var(--color-faint); }
+.tabular { font-variant-numeric: tabular-nums; }
+.live-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
