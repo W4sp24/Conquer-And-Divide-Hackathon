@@ -20,3 +20,6 @@ web/blob-report/
 .DS_Store
 Thumbs.db
 .claude/
+
+# separate repo (team draft README), not part of this one
+suki-ai/
