@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+api/*.db
+api/*.db-*
+api/data/
+# Node
+node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
+web/blob-report/
+# Env / secrets
+.env
+.env.*
+!.env.example
+# OS / tools
+.DS_Store
+Thumbs.db
+.claude/
