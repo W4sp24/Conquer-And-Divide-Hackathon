@@ -70,7 +70,7 @@ export default function Settings() {
           {base && <QR value={walletUrl} size={96} label="DemoWallet send-money QR" />}
           <div className="text-[13.5px] text-ink-2">
             <b className="text-ink">DemoWallet QR (manual mode demo).</b> Stands in for your GCash QR: buyers scan it, send money and get a reference number, then type it on their order page.
-            <a href={walletUrl} target="_blank" rel="noreferrer" className="mt-1 block font-semibold text-brand-deep underline">Open DemoWallet</a>
+            <a href={`/w/${me.id}`} target="_blank" rel="noreferrer" className="mt-1 block font-semibold text-brand-deep underline">Open DemoWallet</a>
           </div>
         </div>
       </Card>

@@ -48,7 +48,7 @@ export default function Packing() {
               const packed = g.status !== 'TO_PACK'
               const shipped = g.status === 'SHIPPED'
               return (
-                <Card key={g.buyer_id} className={cx('flex flex-col', shipped && 'opacity-70')}>
+                <Card key={g.buyer_id} role="group" aria-label={`Packing for ${g.buyer}`} className={cx('flex flex-col', shipped && 'opacity-70')}>
                   <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2"><b className="truncate text-[16px]">{g.buyer}</b><LabelBadge label={g.label} /></div>

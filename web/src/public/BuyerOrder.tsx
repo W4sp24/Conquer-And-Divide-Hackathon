@@ -183,7 +183,8 @@ function QrPay({ o, token, reload }: { o: O; token: string; reload: () => void }
   }
   useEffect(() => { if (!qr) get() // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const url = qr ? `${base}/pay/${qr.intent_id}` : ''
+  const url = qr ? `${base}/pay/${qr.intent_id}` : ''        // for the QR: must open on another phone
+  const local = qr ? `/pay/${qr.intent_id}` : ''              // for links on this device
   const expired = qr && left <= 0
   return (
     <div className="flex flex-col items-center gap-4 rounded-2xl border border-line p-5 text-center">
@@ -195,7 +196,7 @@ function QrPay({ o, token, reload }: { o: O; token: string; reload: () => void }
           <div className="rounded-xl border border-line p-2"><QR value={url} size={210} label="QR Ph payment code" /></div>
           <div className="font-display text-[24px] font-bold tabular">{peso(qr.amount_centavos)}</div>
           <div className="text-[13px] text-muted">Code expires in <b className="font-mono tabular">{duration(left)}</b>. This page updates by itself once you pay.</div>
-          <a href={url} className="inline-flex h-10 items-center gap-2 rounded-[10px] border border-line-2 px-4 text-[14px] font-semibold hover:bg-sunken" onClick={() => setTimeout(reload, 4000)}>
+          <a href={local} className="inline-flex h-10 items-center gap-2 rounded-[10px] border border-line-2 px-4 text-[14px] font-semibold hover:bg-sunken" onClick={() => setTimeout(reload, 4000)}>
             <Icon name="phone" size={16} />Pay on this phone instead
           </a>
         </>
@@ -211,11 +212,9 @@ function ManualPay({ o, token, onChange }: { o: O; token: string; onChange: (o: 
   const [attest, setAttest] = useState(false)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState<string | null>(null)
-  const [base, setBase] = useState('')
-  useEffect(() => { publicBase().then(setBase) }, [])
   const digits = ref.replace(/[^0-9A-Za-z]/g, '')
   const refOk = digits.length >= 6 && digits.length <= 32
-  const wallet = `${base}/w/${o.payment.seller_id}?amount=${o.total_centavos}&note=${encodeURIComponent(`${o.item.code} ${o.item.name}`)}&back=${encodeURIComponent(`/o/${token}`)}`
+  const wallet = `/w/${o.payment.seller_id}?amount=${o.total_centavos}&note=${encodeURIComponent(`${o.item.code} ${o.item.name}`)}&back=${encodeURIComponent(`/o/${token}`)}`
   const submit = async () => {
     setBusy(true); setErr(null)
     try { onChange(await pub.post<O>(`/buyer/${token}/proof`, { reference: ref, attested: attest })) } catch (e) { setErr((e as Error).message) } finally { setBusy(false) }
@@ -227,7 +226,7 @@ function ManualPay({ o, token, onChange }: { o: O; token: string; onChange: (o: 
           <div key={k} className="flex justify-between border-b border-line px-4 py-2.5 text-[14.5px] last:border-0"><span className="text-muted">{k}</span><b className={k === 'Number' ? 'font-mono' : ''}>{v}</b></div>
         ))}
       </div>
-      {base && <a href={wallet} className="text-center text-[13px] font-semibold text-brand-deep underline">Demo: open DemoWallet to send this payment</a>}
+      {<a href={wallet} className="text-center text-[13px] font-semibold text-brand-deep underline">Demo: open DemoWallet to send this payment</a>}
       <div className="rounded-xl bg-sunken p-4">
         <div className="mb-2 text-[13.5px] font-semibold">After paying, open your app and check:</div>
         {['Status says Successful', `Amount is ${peso(o.total_centavos)}`, `Recipient is ${o.payment.name}`].map((t, i) => (

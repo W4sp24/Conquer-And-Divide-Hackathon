@@ -73,7 +73,7 @@ export function OrderDrawer({ orderId, onClose, onChanged }: { orderId: string |
                   <p className="text-[13px] text-muted">Send this to the buyer in Messenger, or scan it to open the buyer page on a phone.</p>
                   <div className="flex flex-wrap gap-2">
                     <Button size="sm" variant="outline" icon="copy" onClick={() => navigator.clipboard?.writeText(link).then(() => toast('Link copied'))}>Copy link</Button>
-                    <a href={link} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-[10px] px-3 text-[13px] font-semibold text-ink-2 hover:bg-sunken"><Icon name="ext" size={15} />Open</a>
+                    <a href={`/o/${d.buyer_token}`} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-[10px] px-3 text-[13px] font-semibold text-ink-2 hover:bg-sunken"><Icon name="ext" size={15} />Open</a>
                   </div>
                 </div>
               </div>

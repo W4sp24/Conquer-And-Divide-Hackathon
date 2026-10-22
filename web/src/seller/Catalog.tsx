@@ -174,12 +174,12 @@ function ItemModal({ item, onClose, onSaved }: { item: Partial<Item>; onClose: (
               <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted">₱</span>
                 <Input value={price} onChange={(e) => setPrice(e.target.value)} inputMode="decimal" placeholder="0.00" className="pl-7 tabular" /></div>
             </Field>
-            <Field label="Stock"><Stepper value={stock} onChange={setStock} label="stock" /></Field>
+            <Field group label="Stock"><Stepper value={stock} onChange={setStock} label="stock" /></Field>
           </div>
         </div>
       </div>
       <div className="mt-5 grid gap-4">
-        <Field label="Sizes" hint="Buyers pick one of these on their order page.">
+        <Field group label="Sizes" hint="Buyers pick one of these on their order page.">
           <div className="flex flex-wrap gap-1.5">
             {COMMON_SIZES.map((s) => (
               <button key={s} type="button" aria-pressed={sizes.includes(s)} onClick={() => setSizes(sizes.includes(s) ? sizes.filter((x) => x !== s) : [...sizes, s])}
@@ -188,7 +188,7 @@ function ItemModal({ item, onClose, onSaved }: { item: Partial<Item>; onClose: (
           </div>
           <Chips values={sizes.filter((s) => !COMMON_SIZES.includes(s))} onChange={(v) => setSizes([...sizes.filter((s) => COMMON_SIZES.includes(s)), ...v])} placeholder="Other size (28, 30…), press Enter" label="Add a size" />
         </Field>
-        <Field label="Keywords" hint="Words buyers use, in English or Tagalog: asul, maong, bestida.">
+        <Field group label="Keywords" hint="Words buyers use, in English or Tagalog: asul, maong, bestida.">
           <Chips values={kw} onChange={setKw} placeholder="Type a keyword, press Enter" label="Add keyword" />
         </Field>
       </div>

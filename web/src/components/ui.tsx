@@ -130,14 +130,19 @@ export function Empty({ icon, title, body, action }: { icon: IconName; title: st
   )
 }
 
-export function Field({ label, hint, error, children, className = '' }: { label: string; hint?: ReactNode; error?: string | null; children: ReactNode; className?: string }) {
-  return (
-    <label className={cx('flex flex-col gap-1.5', className)}>
+/** A labelled control. `group` is for several controls (chips, buttons): a <label> may only
+ *  name one control, so groups get role=group with an aria-label instead. */
+export function Field({ label, hint, error, children, className = '', group }: { label: string; hint?: ReactNode; error?: string | null; children: ReactNode; className?: string; group?: boolean }) {
+  const body = (
+    <>
       <span className="text-[13px] font-semibold text-ink-2">{label}</span>
       {children}
       {error ? <span className="text-[12.5px] font-medium text-hold">{error}</span> : hint && <span className="text-[12.5px] text-muted">{hint}</span>}
-    </label>
+    </>
   )
+  return group
+    ? <div role="group" aria-label={label} className={cx('flex flex-col gap-1.5', className)}>{body}</div>
+    : <label className={cx('flex flex-col gap-1.5', className)}>{body}</label>
 }
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {

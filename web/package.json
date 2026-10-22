@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "live-seller-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "tour": "node e2e/tour.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
