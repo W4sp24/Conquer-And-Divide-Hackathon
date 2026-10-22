@@ -8,8 +8,8 @@ const KEY = process.env.SELLER_KEY || 'demo-seller-key'
 const OUT = 'test-results/tour'
 mkdirSync(OUT, { recursive: true })
 
-const browser = await chromium.launch()
-const desk = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
+const browser = await chromium.launch({ args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] })
+const desk = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, permissions: ['camera', 'microphone'] })
 const page = await desk.newPage()
 page.on('console', (m) => m.type() === 'error' && console.log('[console]', m.text()))
 page.on('pageerror', (e) => console.log('[pageerror]', e.message))
@@ -30,6 +30,15 @@ if (process.env.REPLAY !== '0') {
   await page.waitForURL(/\/seller\/live\//)
   await page.waitForTimeout(Number(process.env.WAIT || 16000))
   await shot(page, '03-live-board')
+  await page.getByRole('button', { name: 'Turn on camera' }).click()
+  await page.getByText('On air').waitFor()
+  const sidNow = page.url().split('/live/')[1]
+  const viewerCtx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true })
+  const vp = await viewerCtx.newPage()
+  await vp.goto(`${BASE}/live/${sidNow}`)
+  await vp.waitForFunction(() => (document.querySelector('video')?.videoWidth ?? 0) > 0, null, { timeout: 20000 }).catch(() => console.log('viewer video did not start'))
+  await shot(vp, '10b-viewer-with-video')
+  await shot(page, '03c-live-board-camera-on')
   await page.screenshot({ path: `${OUT}/03b-live-board-full.png`, fullPage: true })
 }
 // put a few orders through payment so Payments/Packing/Insights have every state
