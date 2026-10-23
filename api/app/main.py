@@ -33,11 +33,11 @@ async def lifespan(app: FastAPI):
     await db.engine.dispose()
 
 
-app = FastAPI(title="Live Seller Order Desk API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="mineIt! API", version="1.0.0", lifespan=lifespan)
 origins = [o.strip() for o in settings.web_origin.split(",") if o.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_methods=["*"], allow_headers=["*"])
 
-api = FastAPI(title="Live Seller Order Desk API", version="1.0.0",
+api = FastAPI(title="mineIt! API", version="1.0.0",
               description="Seller routes need the X-Seller-Key header. Buyer routes need only the order token.")
 for r in (sessions, catalog, buyer, payments, public, seller):
     api.include_router(r.router)

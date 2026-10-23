@@ -52,6 +52,20 @@ Principles applied:
 - Phone pages are thumb-first: big tap targets, one primary action per state, countdowns in tabular figures.
 - Accessible: real buttons and labels, `role="radiogroup"` for size/source pickers, `role="group"` for grouped controls, visible focus rings, `aria-live` on feeds, reduced motion respected.
 
-## Branding placeholder
+## Branding
 
-The name “Order Desk” and the chat-bubble-check logo are placeholders. Change `web/src/brand.ts`, the `Logo` component in `seller/SellerLayout.tsx`, `web/public/favicon.svg` and the `<title>` in `web/index.html`.
+The product is **mineIt!** (capital I). The logo is an “M” with a play button and a LIVE pill over the wordmark.
+
+| Where | What |
+| --- | --- |
+| `docs/assets/logo.png` | The original logo as supplied (opaque, 480×480) |
+| `web/scripts/make-brand-assets.py` | Lifts the white backdrop off and writes the files below, plus the README banner |
+| `web/public/logo.png`, `logo-mark.png` | Full logo and the M mark, transparent; used on the key screen, the seller header and the buyer page footer |
+| `web/public/favicon-32.png`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, `manifest.webmanifest` | Tab icon, home-screen icons and install metadata (the icons use the M alone, which stays legible at 32 px) |
+| `web/src/brand.ts` | Name, tagline, event name and logo paths |
+| `web/src/index.css` | `--color-brand` `#015A5C` (the M), `--color-brand-deep` `#002F38` (the wordmark), `--color-brand-light` `#6ABC9B` (“It!” and the right side of the M), `--color-brand-line` `#AEE5D3` (the play button) |
+| `Logo` in `web/src/seller/SellerLayout.tsx` | Header lockup: the mark image plus the name set in Bricolage Grotesque in the logo’s two tones |
+
+The old teal `#17806A` and the placeholder name “Order Desk” are gone. Hold (red), Pending (amber) and AI (violet) keep their own colours so status never depends on the brand teal. MockPay and DemoWallet keep their own look on purpose: they stand in for other companies’ apps.
+
+Regenerate the files after changing the logo: `python web/scripts/make-brand-assets.py` (needs Pillow and numpy).

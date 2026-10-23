@@ -17,15 +17,14 @@ interface Ctx {
 const SellerCtx = createContext<Ctx | null>(null)
 export const useSeller = () => useContext(SellerCtx)!
 
+/** Header lockup: the logo's M mark with the name set in the logo's two tones. */
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <span className="flex items-center gap-2.5">
-      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#17806A" />
-        <path d="M8 10.5A2.5 2.5 0 0 1 10.5 8h11A2.5 2.5 0 0 1 24 10.5v7a2.5 2.5 0 0 1-2.5 2.5H15l-4.5 4v-4A2.5 2.5 0 0 1 8 17.5z" fill="#fff" />
-        <path d="m12.5 14 2.4 2.4 4.6-4.8" fill="none" stroke="#17806A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <span className={cx('font-display text-[18px] font-bold tracking-tight', dark ? 'text-white' : 'text-ink')}>{BRAND.name}</span>
+    <span className="flex items-center gap-2">
+      <img src={BRAND.mark} alt="" width={266} height={175} className="h-8 w-auto" />
+      <span className="font-display text-[21px] font-extrabold leading-none tracking-tight" aria-label={BRAND.name}>
+        <span className={dark ? 'text-white' : 'text-brand-deep'}>mine</span><span className="text-brand-light">It!</span>
+      </span>
     </span>
   )
 }
@@ -50,9 +49,10 @@ function KeyGate({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid min-h-screen place-items-center bg-bg p-6">
       <form onSubmit={submit} className="w-full max-w-[380px] rounded-2xl border border-line bg-surface p-7 shadow-[var(--shadow-card)]">
-        <div className="flex items-center justify-between"><Logo /><DemoBadge /></div>
-        <h1 className="mt-6 text-[22px] font-bold">Open your seller desk</h1>
-        <p className="mt-1 text-[14px] text-muted">Enter the seller key from the server’s settings (<code className="font-mono text-[12.5px]">SELLER_KEY</code>). The demo key is <code className="font-mono text-[12.5px]">demo-seller-key</code>.</p>
+        <div className="flex justify-end"><DemoBadge /></div>
+        <img src={BRAND.logo} alt={BRAND.name} width={371} height={281} className="mx-auto -mt-2 h-auto w-[190px]" />
+        <h1 className="mt-4 text-center text-[22px] font-bold">Open your seller desk</h1>
+        <p className="mt-1 text-center text-[14px] text-muted">Enter the seller key from the server’s settings (<code className="font-mono text-[12.5px]">SELLER_KEY</code>). The demo key is <code className="font-mono text-[12.5px]">demo-seller-key</code>.</p>
         <Field label="Seller key" error={err} className="mt-5">
           <Input value={key} onChange={(e) => setKey(e.target.value)} autoFocus placeholder="demo-seller-key" aria-label="Seller key" />
         </Field>

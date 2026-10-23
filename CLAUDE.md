@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Hackathon prototype (CSSprint 2026) for Filipino Facebook Live sellers: live comments → orders → verified payments → packing list. FastAPI backend in `api/`, React SPA in `web/`, team-facing explanations in `docs/01..12` (read the relevant doc before changing a subsystem; `docs/11-defend-the-code-qa.md` must stay true to the code). The product name is a placeholder that lives only in `web/src/brand.ts`. `Documentations and references/` holds planning notes and is not code. `suki-ai/` is the team's separate GitHub clone and is gitignored by this repo.
+Hackathon prototype (CSSprint 2026) for Filipino Facebook Live sellers: live comments → orders → verified payments → packing list. FastAPI backend in `api/`, React SPA in `web/`, team-facing explanations in `docs/01..12` (read the relevant doc before changing a subsystem; `docs/11-defend-the-code-qa.md` must stay true to the code). The product is **mineIt!** (capital I; the logo and brand colours are described in `docs/07-frontend-and-design.md`). The name lives in `web/src/brand.ts`, the logo files in `web/public/` are generated from `docs/assets/logo.png` by `web/scripts/make-brand-assets.py`, and brand colours are tokens in `web/src/index.css`. `Documentations and references/` holds planning notes and is not code. `suki-ai/` is the team's separate GitHub clone and is gitignored by this repo.
 
 ## Commands
 
@@ -24,7 +24,7 @@ Frontend (run from `web/`):
 npm run dev        # Vite on :5173, proxies /api to :8000
 npm run build      # tsc -b + vite build → web/dist (served by FastAPI)
 npm run lint       # oxlint
-npm run test:e2e   # Playwright; build first. Starts its own backend on :8010 with a fresh api/data/e2e-*.db
+npm run test:e2e   # Playwright (12 flows); build first. Starts its own backend on :8010 with a fresh api/data/e2e-*.db
 npx playwright test -g "test title"   # single E2E test
 npm run tour       # screenshot tour → test-results/tour
 ```
