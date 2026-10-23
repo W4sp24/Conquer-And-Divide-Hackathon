@@ -19,7 +19,7 @@ TEST_DATABASE_URL=postgresql+asyncpg://user@host:port/db .venv/Scripts/python -m
 
 Last run: **49 passed on SQLite and 49 passed on PostgreSQL 18.**
 
-## 2. Browser end-to-end tests (Playwright): 11 flows
+## 2. Browser end-to-end tests (Playwright): 12 flows
 
 ```bash
 cd web
@@ -31,19 +31,20 @@ Chromium runs with a fake camera (`--use-fake-device-for-media-stream`), so the 
 
 | # | Flow |
 | --- | --- |
-| 1 | Seller unlock: wrong key rejected, right key opens the desk |
-| 2 | Go live here, put B12 on camera, typed comment “mine B12” → claimed on the stage; “mine po” → waitlisted; Taglish description → claimed B7; chat ignored |
-| 3 | Unclear comment lands in Needs you; seller picks item and size, Approve → claimed |
-| 4 | “cancel B12 po” → next buyer promoted to Claimed |
-| 5 | **Instant QR:** buyer must pick a size, confirms, QR Ph code appears; a second phone opens the QR link, confirms payment; the buyer page flips to *Payment confirmed* by itself |
-| 6 | **Manual:** buyer pays in DemoWallet, types the reference (button stays disabled until the self-check is ticked); another buyer types a fake reference; both Pending; statement upload → 1 Release, 1 Hold “Reference not in your statement”; Release all green → buyer page flips; Reject the fake → buyer sees a neutral note, never the reason; buyer record shows Hold |
-| 7 | Packing shows only verified orders; Packed and Shipped toggles |
-| 8 | **Viewer:** seller turns on the camera; a phone opens the viewer QR link and receives the live video (non-zero video width); joins with a name, comments “mine” → “claimed B9”, order chip appears, seller’s stage shows the claim, chip opens the order |
-| 9 | Catalog: validation, add with sizes/keywords, edit price, delete with confirmation |
-| 10 | Insights and every seller screen render with no page errors |
-| 11 | Ending the live refuses new comments (409) but buyer links keep working |
+| 1 | **Branding:** tab title is “mineIt!”, the logo shows on the key screen, and the logo, favicon and manifest files are served as images (not swallowed by the single-page-app fallback) |
+| 2 | Seller unlock: wrong key rejected, right key opens the desk |
+| 3 | Go live here, put B12 on camera, typed comment “mine B12” → claimed on the stage; “mine po” → waitlisted; Taglish description → claimed B7; chat ignored |
+| 4 | Unclear comment lands in Needs you; seller picks item and size, Approve → claimed |
+| 5 | “cancel B12 po” → next buyer promoted to Claimed |
+| 6 | **Instant QR:** buyer must pick a size, confirms, QR Ph code appears; a second phone opens the QR link, confirms payment; the buyer page flips to *Payment confirmed* by itself |
+| 7 | **Manual:** buyer pays in DemoWallet, types the reference (button stays disabled until the self-check is ticked); another buyer types a fake reference; both Pending; statement upload → 1 Release, 1 Hold “Reference not in your statement”; Release all green → buyer page flips; Reject the fake → buyer sees a neutral note, never the reason; buyer record shows Hold |
+| 8 | Packing shows only verified orders; Packed and Shipped toggles |
+| 9 | **Viewer:** seller turns on the camera; a phone opens the viewer QR link and receives the live video (non-zero video width); joins with a name, comments “mine” → “claimed B9”, order chip appears, seller’s stage shows the claim, chip opens the order |
+| 10 | Catalog: validation, add with sizes/keywords, edit price, delete with confirmation |
+| 11 | Insights and every seller screen render with no page errors |
+| 12 | Ending the live refuses new comments (409) but buyer links keep working |
 
-Last run: **11 passed.** Bugs these tests found and fixed during the build: on-device links pointed at the LAN address instead of the current origin; grouped buttons were wrapped in one `<label>` (wrong accessible names); the buyer could have seen the seller’s reject reason.
+Last run: **12 passed.** Bugs these tests found and fixed during the build: on-device links pointed at the LAN address instead of the current origin; grouped buttons were wrapped in one `<label>` (wrong accessible names); the buyer could have seen the seller’s reject reason.
 
 ## 3. Taglish benchmark
 
