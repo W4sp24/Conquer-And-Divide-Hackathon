@@ -221,13 +221,13 @@ function Stage({ board, sid, bc, viewerUrl, running, flash, onOrder, onClear }: 
   const queue = cam ? [...cam.confirmed, ...cam.claimed] : []
   const left = cam ? cam.free_units : 0
   return (
-    <section className="overflow-hidden rounded-[18px] bg-stage text-white shadow-[var(--shadow-pop)]" aria-label="On camera">
-      <div className="grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-        <div className="relative aspect-video bg-stage-2 md:aspect-auto md:min-h-[320px]">
+    <section className="@container overflow-hidden rounded-[18px] bg-stage text-white shadow-[var(--shadow-pop)]" aria-label="On camera">
+      <div className="grid @[720px]:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+        <div className="relative aspect-video bg-stage-2 @[720px]:aspect-auto @[720px]:min-h-[320px]">
           {stream ? (
             <video ref={video} autoPlay playsInline muted className="absolute inset-0 h-full w-full object-cover [transform:scaleX(-1)]" />
           ) : (
-            <div className={cx('absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center', showQr && running && 'md:items-start md:pr-[240px] md:text-left')}>
+            <div className={cx('absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center', showQr && running && '@[520px]:items-start @[520px]:pr-[240px] @[520px]:text-left')}>
               {cam ? <ItemThumb name={cam.name} tone={cam.tone} photo={cam.photo_url} size={96} rounded={16} /> : <Icon name="video" size={34} className="text-white/40" />}
               <p className="max-w-[34ch] text-[13.5px] text-white/65">
                 {running ? 'Turn on the camera to stream to viewers who scan the QR. Comments work either way.' : 'This live has ended.'}
