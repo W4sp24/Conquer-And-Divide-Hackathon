@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { BRAND } from '../brand'
+import { DemoBadge } from '../components/Demo'
 import { Icon } from '../components/Icon'
 import { ItemThumb } from '../components/ItemThumb'
 import { QR } from '../components/QR'
@@ -17,10 +18,13 @@ export function PhoneShell({ shop, children, tag = 'Private link' }: { shop: str
       <div className="mx-auto flex min-h-[100dvh] max-w-[440px] flex-col bg-surface sm:my-6 sm:min-h-0 sm:rounded-[22px] sm:border sm:border-line sm:shadow-[var(--shadow-card)]">
         <header className="flex items-center justify-between border-b border-line px-5 py-3.5">
           <span className="truncate font-display text-[17px] font-bold">{shop}</span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-sunken px-2.5 py-1 text-[12px] font-semibold text-ink-2"><Icon name="shield" size={13} />{tag}</span>
+          <span className="flex items-center gap-1.5">
+            <DemoBadge />
+            <span className="inline-flex items-center gap-1 rounded-full bg-sunken px-2.5 py-1 text-[12px] font-semibold text-ink-2"><Icon name="shield" size={13} />{tag}</span>
+          </span>
         </header>
         <div className="flex-1 px-5 pb-6 pt-5">{children}</div>
-        <footer className="border-t border-line px-5 py-3 text-center text-[12px] text-faint">Powered by {BRAND.name}</footer>
+        <footer className="border-t border-line px-5 py-3 text-center text-[12px] text-faint">Powered by {BRAND.name} · {BRAND.event} prototype</footer>
       </div>
     </div>
   )
