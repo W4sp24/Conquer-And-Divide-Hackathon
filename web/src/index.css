@@ -71,3 +71,8 @@ input::placeholder, textarea::placeholder { color: var(--color-faint); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* "Prototype demo" marker: faint diagonal stripes in the text colour, like test-mode tape */
+.demo-stripes {
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, currentColor 14%, transparent) 0 4px, transparent 4px 8px);
+}

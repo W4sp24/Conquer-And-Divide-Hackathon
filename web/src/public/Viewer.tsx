@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BRAND } from '../brand'
+import { DemoBadge } from '../components/Demo'
 import { Icon } from '../components/Icon'
 import { ItemThumb } from '../components/ItemThumb'
 import { Button, Code, cx, Spinner } from '../components/ui'
@@ -68,7 +69,8 @@ export default function Viewer() {
           <span className={cx('inline-flex h-7 items-center gap-1.5 rounded-full px-2.5 text-[12px] font-bold', ended ? 'bg-black/50' : 'bg-hold')}>
             {!ended && <span className="live-dot h-1.5 w-1.5 rounded-full bg-white" />}{ended ? 'Ended' : 'LIVE'}
           </span>
-          <span className="max-w-[60vw] truncate rounded-full bg-black/45 px-2.5 py-1 text-[12.5px] font-semibold">{info.shop_name}</span>
+          <span className="max-w-[50vw] truncate rounded-full bg-black/45 px-2.5 py-1 text-[12.5px] font-semibold">{info.shop_name}</span>
+          <DemoBadge dark className="bg-black/45" />
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col bg-stage lg:max-w-[420px] lg:border-l lg:border-white/10">

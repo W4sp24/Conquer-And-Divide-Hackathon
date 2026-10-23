@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { Navigate, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { BRAND } from '../brand'
+import { DemoBadge, DemoBanner } from '../components/Demo'
 import { Icon, type IconName } from '../components/Icon'
 import { Button, cx, Field, Input, Spinner } from '../components/ui'
 import { ApiError, getSellerKey, seller, setSellerKey, streamUrl } from '../lib/api'
@@ -49,7 +50,7 @@ function KeyGate({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid min-h-screen place-items-center bg-bg p-6">
       <form onSubmit={submit} className="w-full max-w-[380px] rounded-2xl border border-line bg-surface p-7 shadow-[var(--shadow-card)]">
-        <Logo />
+        <div className="flex items-center justify-between"><Logo /><DemoBadge /></div>
         <h1 className="mt-6 text-[22px] font-bold">Open your seller desk</h1>
         <p className="mt-1 text-[14px] text-muted">Enter the seller key from the server’s settings (<code className="font-mono text-[12.5px]">SELLER_KEY</code>). The demo key is <code className="font-mono text-[12.5px]">demo-seller-key</code>.</p>
         <Field label="Seller key" error={err} className="mt-5">
@@ -147,6 +148,7 @@ export function SellerLayout() {
           </div>
         </aside>
         <main className="min-w-0">
+          <DemoBanner />
           <Outlet />
         </main>
       </div>

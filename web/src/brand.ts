@@ -4,4 +4,6 @@ export const BRAND = {
   name: 'Order Desk',
   tagline: 'From “mine!” to paid and packed',
   placeholder: true,
+  // Shown on every screen (components/Demo.tsx) so nobody mistakes the prototype for a live service.
+  event: 'CSSprint 2026',
 }
