@@ -82,7 +82,7 @@ async def llm_parse(message: str, ctx: dict) -> Parse | None:
                      {"role": "user", "content": json.dumps(user, ensure_ascii=False)}],
     }
     headers = {"Authorization": f"Bearer {settings.openrouter_api_key}",
-               "X-Title": "Live Seller Order Desk"}
+               "X-Title": "mineIt!"}
     t0 = time.perf_counter()
     try:
         async with httpx.AsyncClient(timeout=settings.llm_timeout_s) as client:

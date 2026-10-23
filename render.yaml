@@ -1,7 +1,7 @@
 # Render blueprint: one web service runs the API and serves the built web app.
 services:
   - type: web
-    name: live-seller-order-desk
+    name: mineit
     runtime: python
     rootDir: .
     buildCommand: pip install -r api/requirements.txt && cd web && npm ci && npm run build
