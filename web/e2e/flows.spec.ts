@@ -10,7 +10,7 @@ let sid = ''
 
 async function sellerPage(browser: Browser): Promise<Page> {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, permissions: ['camera', 'microphone'] })
-  await ctx.addInitScript((k) => localStorage.setItem('od.sellerKey', k), KEY)
+  await ctx.addInitScript((k) => localStorage.setItem('mineit.sellerKey', k), KEY)
   return ctx.newPage()
 }
 
@@ -30,6 +30,18 @@ async function testComment(page: Page, name: string, msg: string) {
   expect(r.ok()).toBeTruthy()
   return (await r.json()).parsed
 }
+
+test('branding: tab title, logo files and the logo in the seller header', async ({ page, request }) => {
+  await page.goto('/seller')
+  await expect(page).toHaveTitle('mineIt!')
+  await expect(page.getByRole('img', { name: 'mineIt!' })).toBeVisible()          // full logo on the key screen
+  for (const f of ['/logo.png', '/logo-mark.png', '/favicon-32.png', '/apple-touch-icon.png']) {
+    const r = await request.get(f)                  // must be the image, not the SPA's index.html
+    expect(r.ok(), f).toBeTruthy()
+    expect(r.headers()['content-type'], f).toContain('image/png')
+  }
+  expect((await request.get('/manifest.webmanifest')).ok()).toBeTruthy()
+})
 
 test('seller unlocks the desk with the seller key', async ({ page }) => {
   await page.goto('/seller')

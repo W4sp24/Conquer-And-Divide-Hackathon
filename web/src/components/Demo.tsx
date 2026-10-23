@@ -7,7 +7,7 @@ import { Button, cx } from './ui'
 // Every screen carries a "Prototype demo" marker, and the seller desk opens an explainer
 // window once per browser, so judges and testers know what is real and what is simulated.
 
-const SEEN = 'demo-notice-seen'
+const SEEN = 'mineit.demoNoticeSeen'
 
 function firstVisit() {
   if (navigator.webdriver) return false          // keep automated tests and screenshot tours unblocked

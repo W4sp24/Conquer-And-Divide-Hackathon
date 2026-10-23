@@ -24,7 +24,9 @@ export function PhoneShell({ shop, children, tag = 'Private link' }: { shop: str
           </span>
         </header>
         <div className="flex-1 px-5 pb-6 pt-5">{children}</div>
-        <footer className="border-t border-line px-5 py-3 text-center text-[12px] text-faint">Powered by {BRAND.name} · {BRAND.event} prototype</footer>
+        <footer className="flex items-center justify-center gap-1.5 border-t border-line px-5 py-3 text-[12px] text-faint">
+          <img src={BRAND.mark} alt="" width={266} height={175} className="h-4 w-auto" />Powered by <b className="font-semibold text-ink-2">{BRAND.name}</b> · {BRAND.event} prototype
+        </footer>
       </div>
     </div>
   )

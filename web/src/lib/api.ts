@@ -1,6 +1,6 @@
 // Fetch wrapper. Seller screens send the demo seller key; buyer/viewer pages send nothing.
 const BASE = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || '/api'
-const KEY_STORE = 'od.sellerKey'
+const KEY_STORE = 'mineit.sellerKey'
 
 export class ApiError extends Error {
   status: number

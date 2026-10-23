@@ -15,7 +15,7 @@ interface VComment { id: string; name: string; message: string; created_time: st
 interface Info { id: string; title: string; status: string; shop_name: string; fb_video_url: string | null; camera_live: boolean; on_camera: Item | null; comments: VComment[] }
 interface MyOrder { token: string; item_code: string; item_name: string; status: string; total_centavos: number }
 
-const NAME_KEY = 'od.viewerName'
+const NAME_KEY = 'mineit.viewerName'
 
 /** Public live page: judges/buyers scan the QR, watch the seller's camera and comment.
  *  Comments go through the exact same pipeline as Facebook comments. */

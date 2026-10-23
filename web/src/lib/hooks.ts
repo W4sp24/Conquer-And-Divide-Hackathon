@@ -86,7 +86,7 @@ export function useServerOffset(serverNow: string | null | undefined): number {
 
 export function useDeviceId(): string {
   const [id] = useState(() => {
-    const k = 'od.deviceId'
+    const k = 'mineit.deviceId'
     try {
       const old = localStorage.getItem(k)
       if (old) return old
