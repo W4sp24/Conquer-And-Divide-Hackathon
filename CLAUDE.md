@@ -11,7 +11,7 @@ Backend (run from `api/`, Windows venv paths shown; use `.venv/bin/` on macOS/Li
 ```bash
 python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
 .venv/Scripts/python -m uvicorn app.main:app --reload --port 8000
-.venv/Scripts/python -m pytest                                   # all 49 tests
+.venv/Scripts/python -m pytest                                   # all 57 tests
 .venv/Scripts/python -m pytest tests/test_flow.py::test_name -q  # single test
 TEST_DATABASE_URL=postgresql+asyncpg://... .venv/Scripts/python -m pytest  # same suite on Postgres
 .venv/Scripts/python bench/run_bench.py      # parsing accuracy on bench/comments.csv (LLM tier needs OPENROUTER_API_KEY)

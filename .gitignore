@@ -23,3 +23,8 @@ Thumbs.db
 
 # separate repo (team draft README), not part of this one
 suki-ai/
+
+# ad video (rendered locally, not part of the app)
+ad-video/
+screenshots/
+web/e2e/ad-shots.mjs

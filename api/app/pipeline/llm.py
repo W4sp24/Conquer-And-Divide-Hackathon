@@ -19,7 +19,7 @@ class Parse(BaseModel):
     intent: Literal["claim", "cancel", "waitlist", "question", "other"]
     item_code: str | None = None
     size: str | None = None
-    qty: int = 1
+    qty: int | None = 1                # models often send null when no quantity is said
     for_name: str | None = None
     confidence: float
 
@@ -89,7 +89,7 @@ async def llm_parse(message: str, ctx: dict) -> Parse | None:
             r = await client.post("https://openrouter.ai/api/v1/chat/completions",
                                   headers=headers, json=body)
             r.raise_for_status()
-        content = r.json()["choices"][0]["message"]["content"]
+        content = r.json()["choices"][0]["message"]["content"] or ""   # can be null (empty reply)
         p = Parse.model_validate_json(_extract_json(content))
         LAST_STATUS.update(ok=True, error=None, latency_ms=int((time.perf_counter() - t0) * 1000),
                            at=time.time())

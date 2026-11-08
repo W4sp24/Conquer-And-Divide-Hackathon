@@ -22,7 +22,7 @@ class Settings(BaseSettings):
 
     # LLM step of the parsing cascade (optional; without a key, unsure comments go to review)
     openrouter_api_key: str = ""
-    openrouter_model: str = "anthropic/claude-haiku-4.5"
+    openrouter_model: str = "anthropic/claude-haiku-5.5"
     llm_timeout_s: float = 15.0
 
     # Web

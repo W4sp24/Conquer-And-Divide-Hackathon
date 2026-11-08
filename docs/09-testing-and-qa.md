@@ -2,7 +2,7 @@
 
 Three layers, all runnable on a laptop with no accounts.
 
-## 1. Backend tests (pytest): 49 tests
+## 1. Backend tests (pytest): 57 tests
 
 ```bash
 cd api
@@ -16,8 +16,10 @@ TEST_DATABASE_URL=postgresql+asyncpg://user@host:port/db .venv/Scripts/python -m
 | `tests/test_verify.py` (11) | `verify_payment` as a table of cases: clean match, missing/reused/unknown reference, stale statement → Pending, amount mismatch, old transfer reused, 3× spike, new buyer, all reasons at once |
 | `tests/test_statement.py` (5) | GCash-style export with title rows and debits, bank-style dates and commas, missing columns |
 | `tests/test_flow.py` (17) | The whole API end to end: auth, claim → waitlist → cancel promotes, duplicate claims, on-camera bare claim, fuzzy description, review + fix, manual payment with DemoWallet, fake reference held after statement upload, release all green, reject → buyer label HOLD, reused reference, Instant QR via mock gateway (auto-released), bad webhook signature rejected, packing, hold expiry promotes the waitlist, insights + export, viewer chat + privacy of names, delete-my-data, reset demo |
+| `tests/test_meta_live.py` (5) | The Facebook comment reader against a faked Meta stream: reconnects with backoff and skips resent comments, a bad token stops at once, Meta's HTML error page becomes a readable message, a refused stream (profile live) falls back to polling the comments, repeated failures end with an error on the board |
+| `tests/test_llm.py` (3) | The LLM step against a faked OpenRouter: `qty: null` is accepted, an empty reply goes to review instead of crashing, an invented item code is rejected |
 
-Last run: **49 passed on SQLite and 49 passed on PostgreSQL 18.**
+Last run: **57 passed on SQLite.** (49 passed on PostgreSQL 18 before the Meta reader and LLM tests were added; those 8 do not touch the database.)
 
 ## 2. Browser end-to-end tests (Playwright): 12 flows
 

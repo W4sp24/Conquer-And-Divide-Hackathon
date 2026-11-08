@@ -1,5 +1,6 @@
 """Seller routes for live sessions, the live board and its SSE stream."""
 import json
+import re
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import PlainTextResponse, StreamingResponse
@@ -28,6 +29,13 @@ class NewSession(BaseModel):
     start: bool = True
 
 
+def clean_video_id(raw: str | None) -> str | None:
+    """Accept the id with stray spaces or punctuation, or a whole Facebook video link."""
+    raw = (raw or "").strip()
+    m = re.search(r"(?:videos?/|[?&]v=)(\d{5,})", raw) or re.search(r"(\d{5,})(?!.*\d{5,})", raw)
+    return m.group(1) if m else None
+
+
 async def _session(sid: str, seller: dict) -> dict:
     s = await db.get_session(sid)
     if not s or s["seller_id"] != seller["id"]:
@@ -48,8 +56,10 @@ async def list_sessions(seller=Depends(seller_only)):
 
 @router.post("/sessions")
 async def create_session(body: NewSession, seller=Depends(seller_only)):
-    if body.source == "meta" and not body.live_video_id:
-        raise HTTPException(422, "paste the live video id from Facebook")
+    if body.source == "meta":
+        body.live_video_id = clean_video_id(body.live_video_id)
+        if not body.live_video_id:
+            raise HTTPException(422, "paste the live video id (the number) or the video link from Facebook")
     if body.source == "replay":
         names = {r["name"] for r in list_recordings()}
         if body.live_video_id not in names:

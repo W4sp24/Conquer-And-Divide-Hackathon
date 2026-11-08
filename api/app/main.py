@@ -16,6 +16,7 @@ from app.routers import buyer, catalog, payments, public, seller, sessions
 from app.seed import seed_if_empty
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+logging.getLogger("httpx").setLevel(logging.WARNING)   # its INFO lines print the Meta token in the URL
 WEB_DIST = Path(__file__).resolve().parent.parent.parent / "web" / "dist"
 
 

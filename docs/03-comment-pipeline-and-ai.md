@@ -59,15 +59,17 @@ The board’s right rail shows the oldest unresolved review comment with “Look
 
 `bench/comments.csv` is a starter set of 69 hand-labeled Taglish comments (claims by code, by description, bare claims, cancels, waitlists, questions, chat). `run_bench.py` runs them through each setup. A comment is right when intent and item both match the label; “wrong order” is a comment that would have changed an order for the wrong item, which is the costly failure.
 
-Measured on this machine (no LLM key set):
+Measured on this machine. The first two rows are without an LLM key; the LLM rows were measured on 2026-11-08 with `anthropic/claude-haiku-5.5`:
 
 | Setup | Right | Sent to review | Wrong order | Time per comment |
 | --- | --- | --- | --- | --- |
 | Rules only | 58.0% | 42.0% | **0.0%** | <0.1 ms |
 | Rules + RapidFuzz | 94.2% | 5.8% | **0.0%** | 0.2 ms |
-| + LLM | run with a key | | | |
-| + corrections | run with a key | | | |
+| + LLM | 95.7% | 4.3% | **0.0%** | ~180 ms (only ~1 in 10 comments calls the LLM) |
+| + corrections | 95.7% | 4.3% | **0.0%** | ~220 ms |
 
-Run it: `cd api && .venv/Scripts/python -m bench.run_bench`. With `OPENROUTER_API_KEY` set it adds the LLM rows; the corrections row uses 30 comments as examples and scores the other comments, so it never grades the examples it learned from. Before the final pitch the business team should grow the CSV to 100+ real comments (names removed) and re-run it.
+Run it: `cd api && .venv/Scripts/python -m bench.run_bench`. With `OPENROUTER_API_KEY` set it adds the LLM rows; the corrections row uses 30 comments as examples and scores the other comments, so it never grades the examples it learned from. With a key set, the RapidFuzz row prints lower (89.9%): chat that loosely matches an item name, like “ang ganda ng trench coat!!”, is held for the LLM, and that row has the LLM switched off, so it counts as review.
+
+Cost: an LLM call is about 400–1,200 input tokens and 50 output tokens (about $0.00006 with Haiku 5.5), so 1,000 live comments cost about $0.015 in AI. Before the final pitch the business team should grow the CSV to 100+ real comments (names removed) and re-run it.
 
 **How to read the result:** rules alone already make zero wrong orders, they just send many comments to review. Each step after that turns review work into automatic orders without adding wrong ones. That’s the honest answer to “why AI?”.

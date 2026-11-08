@@ -39,7 +39,7 @@ Interactive API docs: http://localhost:8000/api/docs
 | `DATABASE_URL` | SQLite file in `api/data/` | `postgresql+asyncpg://…` for Supabase/Postgres |
 | `SELLER_KEY` | `demo-seller-key` | Key the seller screens send. Change before deploying |
 | `OPENROUTER_API_KEY` | empty | Turns on the LLM step. Without it, unclear comments go to Needs you |
-| `OPENROUTER_MODEL` | `anthropic/claude-haiku-4.5` | Any OpenRouter model id that returns JSON; pick with the benchmark |
+| `OPENROUTER_MODEL` | `anthropic/claude-haiku-5.5` | Any OpenRouter model id that returns JSON; pick with the benchmark |
 | `META_PAGE_TOKEN` | empty | Facebook Page access token for the Facebook Live source |
 | `PUBLIC_WEB_URL` | empty | Base URL for QR codes (a tunnel or deployed URL). Empty = LAN address |
 | `WEB_ORIGIN` | `http://localhost:5173` | CORS origins when the web app is hosted separately |
@@ -82,6 +82,7 @@ Split hosting (web on Vercel, API on Render) also works: `web/vercel.json` rewri
 2. Get a long-lived user token, then the Page token from `/me/accounts`; put it in `META_PAGE_TOKEN`.
 3. Start the live on the Page, then call `GET /api/meta/live-videos?page_id=<id>` (seller key) or copy the live video id from the URL, and pick **Facebook Live** on the Go live screen.
 4. Comments from people without a role on the app may need App Review; the in-app live page is the fallback that always works.
+5. A new Page can only go live after 60 days and 100 followers. For a test you can go live from a personal profile instead: make a Consumer-type app with the Facebook Login use case, add `user_videos`, put a **user** token in `META_PAGE_TOKEN`, and paste the video id from the live's URL. Meta refuses the live stream for profile videos, so the reader polls the comments every 2 s.
 
 ## OpenRouter (LLM)
 

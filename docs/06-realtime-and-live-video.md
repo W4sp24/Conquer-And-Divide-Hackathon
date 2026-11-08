@@ -23,7 +23,7 @@ All sources call the same `runner.ingest(session_id, comment)`, so nothing after
 
 | Source | How | When to use |
 | --- | --- | --- |
-| **Facebook Live** (`meta_live.py`) | Streams `https://streaming-graph.facebook.com/{live_video_id}/live_comments` with the Page token (backend only). Errors show on the board. | Real lives. Needs a Page token and, for viewers without a role on the Meta app, App Review. |
+| **Facebook Live** (`meta_live.py`) | Streams `https://streaming-graph.facebook.com/{live_video_id}/live_comments` with the Page token (backend only). When Meta closes the stream it reconnects with backoff (1, 2, 4… up to 30 s) and skips comments it already saw; a bad token or video id, or 6 failed reconnects in a row, shows an error on the board. Meta refuses the stream for lives on a personal profile; then the reader polls `GET /{video-id}/comments` every 2 s instead (needs a user token with `user_videos`). | Real lives. Needs a Page token and, for viewers without a role on the Meta app, App Review. |
 | **Live here** (in-app) | Viewers scan the QR, open `/live/:sid`, enter a name and comment. `POST /api/public/sessions/{sid}/comments`, max 1 comment/second per device. | The demo’s wow moment: judges comment from their own phones. |
 | **Replay** (`replay.py`) | Plays `api/recordings/*.jsonl` with the original gaps, 1×–4×. Recordings can include `{"type":"camera"}` rows to put items on camera. | Bad Wi-Fi fallback, rehearsals. Export any live with **Export** on the Lives page. |
 | **Test comment** | “+ Type a test comment” on the board. | Rehearsing a specific comment. |

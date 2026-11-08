@@ -124,7 +124,7 @@ FastAPI · SQLAlchemy 2 (SQLite locally, PostgreSQL/Supabase in production) · R
 ## Tests
 
 ```bash
-cd api && .venv/Scripts/python -m pytest              # 49 backend tests (SQLite; also passes on PostgreSQL 18)
+cd api && .venv/Scripts/python -m pytest              # 57 backend tests (SQLite; also passes on PostgreSQL 18)
 cd web && npm run build && npm run test:e2e           # 12 browser tests with a fake camera, against the real backend
 ```
 

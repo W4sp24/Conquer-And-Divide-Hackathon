@@ -29,7 +29,7 @@
 
 ## 5. Close (15 s)
 
-“From ‘mine!’ to paid and packed. Rules first, AI only where rules fail, and every money decision is plain, testable code: 49 backend tests and 12 browser tests run on every change.”
+“From ‘mine!’ to paid and packed. Rules first, AI only where rules fail, and every money decision is plain, testable code: 57 backend tests and 12 browser tests check every money rule.”
 
 ## Fallbacks
 

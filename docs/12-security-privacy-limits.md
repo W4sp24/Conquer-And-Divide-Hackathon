@@ -31,7 +31,7 @@
 - **Seller login** is a shared key, not user accounts. One seller per deployment.
 - **Single backend instance** (in-memory SSE hub and WebRTC signaling). Scale-out needs Redis or Supabase Realtime.
 - **Live video** is peer-to-peer from the seller’s browser: fine for a demo room and a few dozen viewers; a large audience needs an SFU/streaming service, and restrictive networks need a TURN server. Facebook Live remains the main broadcast channel in production; the in-app page shows the Facebook video when given its link.
-- **Facebook Live comments** need a Page token; viewers without a role on the Meta app may need App Review. Not exercised in automated tests (no token available); the code follows Meta’s documented `live_comments` stream and reports errors on the board.
+- **Facebook Live comments** need a Page token; viewers without a role on the Meta app may need App Review. Tested only against a faked Meta stream (no token in CI); the code follows Meta’s documented `live_comments` stream, reconnects when it drops and reports errors on the board. The token is never logged (httpx logging is set to WARNING) and Meta errors shown to the seller do not include the request URL.
 - **QR Ph** is a test-mode mock, not real money. DemoWallet stands in for GCash. The statement parser recognizes common column names but should be checked against a real GCash/Maya export (still to be collected by the business team).
 - **LLM accuracy numbers** need an OpenRouter key to measure; the benchmark set is a 69-comment starter and should grow to 100+ real (anonymized) comments.
 - Camera access needs `localhost` or HTTPS on the seller’s device.
